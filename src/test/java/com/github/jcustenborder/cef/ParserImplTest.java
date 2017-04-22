@@ -15,44 +15,34 @@
  */
 package com.github.jcustenborder.cef;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static com.github.jcustenborder.cef.MessageAssertions.assertMessage;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class ParserImplTest {
 
+  Parser parser;
 
-  @Test
-  public void foo() throws IOException {
-    final String input = "CEF:0|ArcSight|ArcSight|6.0.3.6664.0|agent:030|Agent [test] type [testalertng] started|Low| " +
-        "eventId=1 mrt=1396328238973 categorySignificance=/Normal categoryBehavior=/Execute/Start " +
-        "categoryDeviceGroup=/Application catdt=Security Mangement categoryOutcome=/Success " +
-        "categoryObject=/Host/Application/Service art=1396328241038 cat=/Agent/Started " +
-        "deviceSeverity=Warning rt=1396328238937 fileType=Agent " +
-        "cs2=<Resource ID\\=\"3DxKlG0UBABCAA0cXXAZIwA\\=\\=\"/> c6a4=fe80:0:0:0:495d:cc3c:db1a:de71 " +
-        "cs2Label=Configuration Resource c6a4Label=Agent " +
-        "IPv6 Address ahost=SKEELES10 agt=888.99.100.1 agentZoneURI=/All Zones/ArcSight " +
-        "System/Private Address Space " +
-        "Zones/RFC1918: 888.99.0.0-888.200.255.255 av=6.0.3.6664.0 atz=Australia/Sydney " +
-        "aid=3DxKlG0UBABCAA0cXXAZIwA\\=\\= at=testalertng dvchost=SKEELES10 dvc=888.99.100.1 " +
-        "deviceZoneURI=/All Zones/ArcSight System/Private Address Space Zones/RFC1918: " +
-        "888.99.0.0-888.200.255.255 dtz=Australia/Sydney _cefVer=0.1";
-
-    Parser parserImpl = new ParserImpl();
-
-    Message message = parserImpl.parse(input);
-    assertNotNull(message);
+  @BeforeEach
+  public void before() {
+    this.parser = new ParserImpl();
   }
 
-  @Test
-  public void foo2() throws IOException {
-    final String input = "CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 dst=2.1.2.2 spt=1232";
+  @TestFactory
+  public Stream<DynamicTest> parse() throws IOException {
+    List<TestCase> testCases = TestDataUtils.loadJsonResourceFiles(this.getClass().getPackage().getName() + ".messages", TestCase.class);
 
-    Parser parser = new ParserImpl();
-
-    Message message = parser.parse(input);
-    assertNotNull(message);
+    return testCases.stream().map(testCase -> dynamicTest(testCase.testName(), () -> {
+      Message actual = this.parser.parse(testCase.input);
+      assertMessage(testCase.expected, actual);
+    }));
   }
+
 }

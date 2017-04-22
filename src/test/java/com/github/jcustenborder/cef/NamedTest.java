@@ -15,22 +15,8 @@
  */
 package com.github.jcustenborder.cef;
 
-import java.util.Map;
+public interface NamedTest {
+  String testName();
 
-public interface Message {
-  int cefVersion();
-
-  String deviceVendor();
-
-  String deviceProduct();
-
-  String deviceVersion();
-
-  String deviceEventClassId();
-
-  String name();
-
-  String severity();
-
-  Map<String, String> extensions();
+  void testName(String testName);
 }

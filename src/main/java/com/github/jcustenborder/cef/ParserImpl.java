@@ -44,9 +44,8 @@ class ParserImpl implements Parser {
     final String deviceVersion = parts[3];
     final String deviceEventClassId = parts[4];
     final String name = parts[5];
-    final int severity = Integer.parseInt(parts[6]);
+    final String severity = parts[6];
     final String extensionText = parts.length == 8 ? parts[7] : "";
-
 
 
     return null;

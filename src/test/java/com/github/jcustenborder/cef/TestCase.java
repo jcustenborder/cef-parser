@@ -15,22 +15,23 @@
  */
 package com.github.jcustenborder.cef;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public interface Message {
-  int cefVersion();
+public class TestCase implements NamedTest {
+  public String input;
+  public Message expected;
+  @JsonIgnore
+  public String testName;
 
-  String deviceVendor();
+  @JsonIgnore
+  @Override
+  public String testName() {
+    return this.testName;
+  }
 
-  String deviceProduct();
-
-  String deviceVersion();
-
-  String deviceEventClassId();
-
-  String name();
-
-  String severity();
-
-  Map<String, String> extensions();
+  @JsonIgnore
+  @Override
+  public void testName(String testName) {
+    this.testName = testName;
+  }
 }
