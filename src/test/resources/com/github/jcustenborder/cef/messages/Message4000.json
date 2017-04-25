@@ -1,0 +1,19 @@
+{
+  "input" : "Apr 25 17:23:49 UTC hostname.example.com CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 dst=2.1.2.2 spt=1232",
+  "expected" : {
+    "timestamp" : 1493141029000,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "Security",
+    "deviceProduct" : "threatmanager",
+    "deviceVersion" : "1.0",
+    "deviceEventClassId" : "100",
+    "name" : "worm successfully stopped",
+    "severity" : "10",
+    "extensions" : {
+      "src" : "10.0.0.1",
+      "dst" : "2.1.2.2",
+      "spt" : "1232"
+    }
+  }
+}

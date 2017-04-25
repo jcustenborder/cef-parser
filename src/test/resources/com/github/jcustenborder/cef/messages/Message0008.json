@@ -1,0 +1,14 @@
+{
+  "input": "CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|",
+  "expected": {
+    "cefVersion": 0,
+    "deviceVendor": "security",
+    "deviceProduct": "threatmanager",
+    "deviceVersion": "1.0",
+    "deviceEventClassId": "100",
+    "name": "Detected a threat. No action needed.",
+    "severity": "10",
+    "extensions": {
+    }
+  }
+}
