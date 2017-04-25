@@ -1,0 +1,18 @@
+{
+  "input" : "Apr 25 2017 16:22:51 UTC hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|src=10.0.0.1 msg=Detected a threat.\\n No action needed.",
+  "expected" : {
+    "timestamp" : 1493137371346,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "security",
+    "deviceProduct" : "threatmanager",
+    "deviceVersion" : "1.0",
+    "deviceEventClassId" : "100",
+    "name" : "Detected a threat. No action needed.",
+    "severity" : "10",
+    "extensions" : {
+      "src" : "10.0.0.1",
+      "msg" : "Detected a threat.\n No action needed."
+    }
+  }
+}
