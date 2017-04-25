@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestCase implements NamedTest, Cloneable {
+  static final Pattern PATTERN_NUMBER = Pattern.compile("\\d+$");
   public String input;
   public Message expected;
   @JsonIgnore
@@ -34,8 +35,6 @@ public class TestCase implements NamedTest, Cloneable {
   public String testName() {
     return this.testName;
   }
-
-  static final Pattern PATTERN_NUMBER = Pattern.compile("\\d+$");
 
   @JsonIgnore
   @Override
