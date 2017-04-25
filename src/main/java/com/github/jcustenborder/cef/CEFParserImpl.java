@@ -89,16 +89,21 @@ class CEFParserImpl implements CEFParser {
           try {
             log.trace("parse() - Trying to parse '{}' with format '{}'", timestampText, df);
             timestamp = dateFormat.parse(timestampText);
+            final boolean alterYear = !df.contains("yyyy");
 
-            Calendar calendar = Calendar.getInstance(TIME_ZONE);
-            int thisYear = calendar.get(Calendar.YEAR);
-            calendar.setTime(timestamp);
-            final int year = calendar.get(Calendar.YEAR);
-            if (1970 == year) {
-              log.trace("parse() - altering year from {} to {}", year, thisYear);
-              calendar.set(Calendar.YEAR, thisYear);
-              timestamp = calendar.getTime();
+            if(alterYear) {
+              log.trace("parse() - date format '{}' does not specify the year. Might need to alter the year.", df);
+              Calendar calendar = Calendar.getInstance(TIME_ZONE);
+              int thisYear = calendar.get(Calendar.YEAR);
+              calendar.setTime(timestamp);
+              final int year = calendar.get(Calendar.YEAR);
+              if (1970 == year) {
+                log.trace("parse() - altering year from {} to {}", year, thisYear);
+                calendar.set(Calendar.YEAR, thisYear);
+                timestamp = calendar.getTime();
+              }
             }
+
             break;
           } catch (ParseException e) {
             log.trace("parse() - Could not parse '{}' with '{}'.", timestampText, df);
