@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 import static org.mockito.Mockito.mock;
@@ -38,6 +39,8 @@ class MessageSerializationModule extends SimpleModule {
   }
 
   public static class Storage {
+    public Date timestamp;
+    public String host;
     public int cefVersion;
     public String deviceVendor;
     public String deviceProduct;
@@ -49,6 +52,8 @@ class MessageSerializationModule extends SimpleModule {
 
     Message build() {
       Message message = mock(Message.class);
+      when(message.timestamp()).thenReturn(this.timestamp);
+      when(message.host()).thenReturn(this.host);
       when(message.cefVersion()).thenReturn(this.cefVersion);
       when(message.deviceVendor()).thenReturn(this.deviceVendor);
       when(message.deviceProduct()).thenReturn(this.deviceProduct);
@@ -65,6 +70,8 @@ class MessageSerializationModule extends SimpleModule {
     @Override
     public void serialize(Message message, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
       Storage storage = new Storage();
+      storage.timestamp = message.timestamp();
+      storage.host = message.host();
       storage.cefVersion = message.cefVersion();
       storage.deviceVendor = message.deviceVendor();
       storage.deviceProduct = message.deviceProduct();

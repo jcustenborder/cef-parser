@@ -15,10 +15,13 @@
  */
 package com.github.jcustenborder.cef;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 class MessageImpl implements Message {
+  Date timestamp;
+  String host;
   int cefVersion;
   String deviceVendor;
   String deviceProduct;
@@ -27,6 +30,16 @@ class MessageImpl implements Message {
   String name;
   String severity;
   Map<String, String> extensions;
+
+  @Override
+  public Date timestamp() {
+    return timestamp;
+  }
+
+  @Override
+  public String host() {
+    return host;
+  }
 
   @Override
   public int cefVersion() {
@@ -69,6 +82,8 @@ class MessageImpl implements Message {
   }
 
   public static class BuilderImpl implements Message.Builder {
+    Date timestamp;
+    String host;
     int cefVersion;
     String deviceVendor;
     String deviceProduct;
@@ -77,6 +92,29 @@ class MessageImpl implements Message {
     String name;
     String severity;
     Map<String, String> extensions = new HashMap<>();
+
+    @Override
+    public Date timestamp() {
+      return timestamp;
+    }
+
+    @Override
+    public BuilderImpl timestamp(Date timestamp) {
+      this.timestamp = timestamp;
+      return this;
+    }
+
+    @Override
+    public String host() {
+      return host;
+    }
+
+    @Override
+    public BuilderImpl host(String host) {
+      this.host = host;
+      return this;
+    }
+
 
     @Override
     public int cefVersion() {
@@ -169,6 +207,8 @@ class MessageImpl implements Message {
     @Override
     public Message build() {
       MessageImpl message = new MessageImpl();
+      message.timestamp = this.timestamp;
+      message.host = this.host;
       message.cefVersion = this.cefVersion;
       message.deviceVendor = this.deviceVendor;
       message.deviceProduct = this.deviceProduct;

@@ -16,12 +16,18 @@
 package com.github.jcustenborder.cef;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Preconditions;
 
-public class TestCase implements NamedTest {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class TestCase implements NamedTest, Cloneable {
   public String input;
   public Message expected;
   @JsonIgnore
   public String testName;
+  @JsonIgnore
+  public Integer testNumber;
 
   @JsonIgnore
   @Override
@@ -29,9 +35,24 @@ public class TestCase implements NamedTest {
     return this.testName;
   }
 
+  static final Pattern PATTERN_NUMBER = Pattern.compile("\\d+$");
+
   @JsonIgnore
   @Override
   public void testName(String testName) {
     this.testName = testName;
+    Matcher matcher = PATTERN_NUMBER.matcher(testName);
+    Preconditions.checkState(matcher.find(), "Should match regex. %s", PATTERN_NUMBER.pattern());
+    this.testNumber = Integer.parseInt(matcher.group(0));
+  }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    TestCase clone = new TestCase();
+    clone.testNumber = this.testNumber;
+    clone.testName = this.testName;
+    clone.expected = this.expected;
+    clone.input = this.input;
+    return clone;
   }
 }

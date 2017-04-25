@@ -16,15 +16,27 @@
 package com.github.jcustenborder.cef;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.jcustenborder.cef.MessageAssertions.assertMessage;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static org.mockito.Mockito.when;
 
 public class ParserImplTest {
 
@@ -43,6 +55,62 @@ public class ParserImplTest {
       Message actual = this.parser.parse(testCase.input);
       assertMessage(testCase.expected, actual);
     }));
+  }
+
+  @Disabled
+  @Test
+  public void generateDateFormatTestData() throws IOException, CloneNotSupportedException {
+    List<TestCase> testCases = TestDataUtils.loadJsonResourceFiles(this.getClass().getPackage().getName() + ".messages", TestCase.class);
+    Map<Integer, TestCase> testcaseByNumber = testCases.stream().filter(new Predicate<TestCase>() {
+      @Override
+      public boolean test(TestCase testCase) {
+        return testCase.testNumber < 1000;
+      }
+    }).collect(Collectors.toMap(i -> i.testNumber, i -> i));
+
+    Date date = new Date();
+    final String testInputformat = "%s hostname.example.com %s";
+    final String testFileNameFormat = "Message%04d.json";
+    final File outputRoot = new File("src/test/resources/com/github/jcustenborder/cef/messages");
+
+    List<String> dateFormats = Arrays.asList(
+        "MMM dd HH:mm:ss.SSS zzz",
+        "MMM dd HH:mm:ss.SSS",
+        "MMM dd HH:mm:sszzz",
+        "MMM dd HH:mm:ss",
+        "MMM dd yyyy HH:mm:ss.SSS zzz",
+        "MMM dd yyyy HH:mm:ss.SSS",
+        "MMM dd yyyy HH:mm:ss zzz",
+        "MMM dd yyyy HH:mm:ss"
+    );
+
+    for (Map.Entry<Integer, TestCase> kvp : testcaseByNumber.entrySet()) {
+      int testNumber = kvp.getKey();
+      testNumber += 1000;
+
+      String testFileName = String.format(testFileNameFormat, testNumber);
+      File outputPath = new File(outputRoot, testFileName);
+      TestCase testCase = (TestCase) kvp.getValue().clone();
+      when(testCase.expected.timestamp()).thenReturn(date);
+      when(testCase.expected.host()).thenReturn("hostname.example.com");
+      testCase.input = String.format(testInputformat, date.getTime(), testCase.input);
+
+      ObjectMapperFactory.INSTANCE.writeValue(outputPath, testCase);
+
+      for (String f : dateFormats) {
+        DateFormat dateFormat = new SimpleDateFormat(f);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        testNumber += 1000;
+
+        testFileName = String.format(testFileNameFormat, testNumber);
+        outputPath = new File(outputRoot, testFileName);
+        testCase = (TestCase) kvp.getValue().clone();
+        testCase.input = String.format(testInputformat, dateFormat.format(date), testCase.input);
+        ObjectMapperFactory.INSTANCE.writeValue(outputPath, testCase);
+      }
+
+    }
+
   }
 
 }

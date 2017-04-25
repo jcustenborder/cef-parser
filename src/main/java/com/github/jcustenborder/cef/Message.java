@@ -15,9 +15,14 @@
  */
 package com.github.jcustenborder.cef;
 
+import java.util.Date;
 import java.util.Map;
 
 public interface Message {
+  Date timestamp();
+
+  String host();
+
   int cefVersion();
 
   String deviceVendor();
@@ -35,6 +40,11 @@ public interface Message {
   Map<String, String> extensions();
 
   interface Builder {
+
+    Builder timestamp(Date timestamp);
+
+    Builder host(String host);
+
     Builder cefVersion(int cefVersion);
 
     Builder deviceVendor(String deviceVendor);
@@ -50,6 +60,10 @@ public interface Message {
     Builder severity(String severity);
 
     Builder extensions(Map<String, String> extensions);
+
+    Date timestamp();
+
+    String host();
 
     int cefVersion();
 
