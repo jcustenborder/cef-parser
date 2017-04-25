@@ -23,7 +23,6 @@ import com.google.common.primitives.Longs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -60,7 +59,7 @@ class CEFParserImpl implements CEFParser {
 
 
   @Override
-  public Message parse(final String event) throws IOException {
+  public Message parse(final String event) {
     log.trace("parse('{}')", event);
 
 

@@ -26,10 +26,10 @@
         <version>1.0.0.0</version>
     </parent>
     <groupId>com.github.jcustenborder</groupId>
-    <artifactId>cef-parserImpl</artifactId>
+    <artifactId>cef-parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cef-parserImpl</name>
-    <url>https://github.com/jcustenborder/cef-parserImpl</url>
+    <url>https://github.com/jcustenborder/cef-parser</url>
     <inceptionYear>2017</inceptionYear>
     <licenses>
         <license>
@@ -49,24 +49,24 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/jcustenborder/cef-parserImpl.git</connection>
-        <developerConnection>scm:git:git@github.com:jcustenborder/cef-parserImpl.git</developerConnection>
-        <url>https://github.com/jcustenborder/cef-parserImpl</url>
+        <connection>scm:git:https://github.com/jcustenborder/cef-parser.git</connection>
+        <developerConnection>scm:git:git@github.com:jcustenborder/cef-parser.git</developerConnection>
+        <url>https://github.com/jcustenborder/cef-parser</url>
     </scm>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/jcustenborder/cef-parserImpl/issues</url>
+        <url>https://github.com/jcustenborder/cef-parser/issues</url>
     </issueManagement>
     <properties>
-        <mockito.version>1.10.19</mockito.version>
-        <logback.version>1.1.8</logback.version>
-        <guava.version>18.0</guava.version>
-        <junit.surefire.plugin.version>1.0.0-M3</junit.surefire.plugin.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.0.0-M3</junit.version>
-        <jackson.version>2.6.3</jackson.version>
+        <guava.version>18.0</guava.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <logback.version>1.1.8</logback.version>
         <antlr.version>4.6</antlr.version>
+        <junit.surefire.plugin.version>1.0.0-M3</junit.surefire.plugin.version>
+        <jackson.version>2.6.3</jackson.version>
+        <mockito.version>1.10.19</mockito.version>
     </properties>
     <dependencies>
         <dependency>
