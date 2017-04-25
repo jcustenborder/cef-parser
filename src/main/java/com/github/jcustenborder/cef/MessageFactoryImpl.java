@@ -15,12 +15,9 @@
  */
 package com.github.jcustenborder.cef;
 
-public class ParserFactory {
-  public static CEFParser create() {
-    return create(new MessageFactoryImpl());
-  }
-
-  public static CEFParser create(MessageFactory messageFactory) {
-    return new CEFParserImpl(messageFactory);
+class MessageFactoryImpl implements MessageFactory {
+  @Override
+  public Message.Builder newBuilder() {
+    return new MessageImpl.BuilderImpl();
   }
 }
