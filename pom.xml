@@ -130,35 +130,35 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--<plugin>-->
-            <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-            <!--<version>2.17</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>validate</id>-->
-            <!--<phase>validate</phase>-->
-            <!--<goals>-->
-            <!--<goal>check</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<configLocation>checkstyle.xml</configLocation>-->
-            <!--<encoding>UTF-8</encoding>-->
-            <!--<consoleOutput>true</consoleOutput>-->
-            <!--<failsOnError>true</failsOnError>-->
-            <!--<includeResources>false</includeResources>-->
-            <!--<includeTestResources>false</includeTestResources>-->
-            <!--<excludes>${project.build.directory}/**</excludes>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>com.github.jcustenborder.kafka.connect</groupId>-->
-            <!--<artifactId>kafka-connect-checkstyle</artifactId>-->
-            <!--<version>1.0.0.0</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <configLocation>checkstyle.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <includeResources>false</includeResources>
+                            <includeTestResources>false</includeTestResources>
+                            <excludes>${project.build.directory}/**</excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.jcustenborder.kafka.connect</groupId>
+                        <artifactId>kafka-connect-checkstyle</artifactId>
+                        <version>1.0.0.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>

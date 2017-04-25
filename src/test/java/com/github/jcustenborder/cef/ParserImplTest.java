@@ -45,7 +45,7 @@ public class ParserImplTest {
 
   @BeforeEach
   public void before() {
-    this.parser = ParserFactory.create();
+    this.parser = CEFParserFactory.create();
   }
 
   @TestFactory
