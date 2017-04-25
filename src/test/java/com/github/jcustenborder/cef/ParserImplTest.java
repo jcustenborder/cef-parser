@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,11 @@ public class ParserImplTest {
       }
     }).collect(Collectors.toMap(i -> i.testNumber, i -> i));
 
-    Date date = new Date();
+    //Filter out milliseconds since most of these formats don't go that far.
+    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+    calendar.set(Calendar.MILLISECOND, 0);
+
+    Date date = calendar.getTime();
     final String testInputformat = "%s hostname.example.com %s";
     final String testFileNameFormat = "Message%04d.json";
     final File outputRoot = new File("src/test/resources/com/github/jcustenborder/cef/messages");
@@ -76,7 +81,7 @@ public class ParserImplTest {
     List<String> dateFormats = Arrays.asList(
         "MMM dd HH:mm:ss.SSS zzz",
         "MMM dd HH:mm:ss.SSS",
-        "MMM dd HH:mm:sszzz",
+        "MMM dd HH:mm:ss zzz",
         "MMM dd HH:mm:ss",
         "MMM dd yyyy HH:mm:ss.SSS zzz",
         "MMM dd yyyy HH:mm:ss.SSS",

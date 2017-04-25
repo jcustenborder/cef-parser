@@ -1,7 +1,7 @@
 {
-  "input" : "Apr 25 2017 16:22:51 UTC hostname.example.com CEF:0|security|threatmanager|1.0|100|detected a \\| in message|10|src=10.0.0.1 act=blocked a | dst=1.1.1.1",
+  "input" : "Apr 25 2017 17:23:49 UTC hostname.example.com CEF:0|security|threatmanager|1.0|100|detected a \\| in message|10|src=10.0.0.1 act=blocked a | dst=1.1.1.1",
   "expected" : {
-    "timestamp" : 1493137371346,
+    "timestamp" : 1493141029000,
     "host" : "hostname.example.com",
     "cefVersion" : 0,
     "deviceVendor" : "security",

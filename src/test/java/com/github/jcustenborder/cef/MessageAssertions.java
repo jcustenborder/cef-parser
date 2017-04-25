@@ -27,6 +27,8 @@ public class MessageAssertions {
       assertNotNull(actual, "actual should not be null.");
     }
 
+    assertEquals(expected.timestamp(), actual.timestamp(), "timestamp() does not match");
+    assertEquals(expected.host(), actual.host(), "host() does not match");
     assertEquals(expected.cefVersion(), actual.cefVersion(), "cefVersion() does not match");
     assertEquals(expected.deviceVendor(), actual.deviceVendor(), "deviceVendor() does not match");
     assertEquals(expected.deviceProduct(), actual.deviceProduct(), "deviceProduct() does not match");

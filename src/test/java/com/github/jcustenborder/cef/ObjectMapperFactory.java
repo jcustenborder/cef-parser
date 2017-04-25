@@ -20,6 +20,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.util.TimeZone;
+
 public class ObjectMapperFactory {
   public static final ObjectMapper INSTANCE;
 
@@ -29,7 +31,7 @@ public class ObjectMapperFactory {
     INSTANCE.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true);
     INSTANCE.configure(DeserializationFeature.USE_LONG_FOR_INTS, true);
     INSTANCE.configure(SerializationFeature.INDENT_OUTPUT, true);
-
+    INSTANCE.setTimeZone(TimeZone.getTimeZone("UTC"));
     INSTANCE.registerModule(new MessageSerializationModule());
   }
 

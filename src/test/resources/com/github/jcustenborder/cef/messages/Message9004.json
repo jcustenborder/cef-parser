@@ -1,7 +1,7 @@
 {
-  "input" : "Apr 25 2017 16:22:51 hostname.example.com CEF:0|ArcSight|Logger|5.0.0.5355.2|sensor:115|Logger Internal Event|1|cat=/Monitor/Sensor/Fan5 cs2=Current Value cnt=1 dvc=10.0.0.1 cs3=Ok cs1=null type=0 cs1Label=unit rt=1305034099211 cs3Label=Status cn1Label=value cs2Label=timeframe",
+  "input" : "Apr 25 2017 17:23:49 hostname.example.com CEF:0|ArcSight|Logger|5.0.0.5355.2|sensor:115|Logger Internal Event|1|cat=/Monitor/Sensor/Fan5 cs2=Current Value cnt=1 dvc=10.0.0.1 cs3=Ok cs1=null type=0 cs1Label=unit rt=1305034099211 cs3Label=Status cn1Label=value cs2Label=timeframe",
   "expected" : {
-    "timestamp" : 1493137371346,
+    "timestamp" : 1493141029000,
     "host" : "hostname.example.com",
     "cefVersion" : 0,
     "deviceVendor" : "ArcSight",

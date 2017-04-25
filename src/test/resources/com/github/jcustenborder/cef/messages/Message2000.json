@@ -1,7 +1,7 @@
 {
-  "input" : "Apr 25 16:22:51.346 UTC hostname.example.com CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 dst=2.1.2.2 spt=1232",
+  "input" : "Apr 25 17:23:49.000 UTC hostname.example.com CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 dst=2.1.2.2 spt=1232",
   "expected" : {
-    "timestamp" : 1493137371346,
+    "timestamp" : 1493141029000,
     "host" : "hostname.example.com",
     "cefVersion" : 0,
     "deviceVendor" : "Security",
