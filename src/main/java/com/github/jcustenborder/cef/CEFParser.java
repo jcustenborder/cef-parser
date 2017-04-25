@@ -15,8 +15,14 @@
  */
 package com.github.jcustenborder.cef;
 
-import java.io.IOException;
-
+/**
+ * Interface is used to implement a CEFParser. Mainly for testing purposes.
+ */
 public interface CEFParser {
-  Message parse(final String input) throws IOException;
+  /**
+   * Method is used to parse text from a CEF message and convert it to a Message object.
+   * @param input CEF formatted string
+   * @return
+   */
+  Message parse(final String input);
 }

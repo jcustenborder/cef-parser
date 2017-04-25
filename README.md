@@ -1,5 +1,7 @@
 # Introduction
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jcustenborder/cef-parser/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.jcustenborder/cef-parser)
+
 This library is used to parse the [ArcSight Common Event Format (CEF)](https://www.protect724.hpe.com/docs/DOC-1072). 
 CEF is a logging protocol that is typically sent over syslog. Messages will be formatted similar to this:
  
