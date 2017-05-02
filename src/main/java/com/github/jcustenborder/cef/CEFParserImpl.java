@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -61,10 +61,11 @@ class CEFParserImpl implements CEFParser {
   @Override
   public Message parse(final String event) {
     log.trace("parse('{}')", event);
-
-
     Matcher prefixMatcher = PATTERN_CEF_PREFIX.matcher(event);
-    Preconditions.checkState(prefixMatcher.find(), "event must match regex. %s", PATTERN_CEF_PREFIX.pattern());
+    if (!prefixMatcher.find()) {
+      log.trace("parse() - event does not match pattern '{}'.", PATTERN_CEF_PREFIX.pattern());
+      return null;
+    }
     final String timestampText = prefixMatcher.group("timestamp");
     final String host = prefixMatcher.group("host");
     log.trace("parse() - timestampText = '{}' host='{}'", timestampText, host);

@@ -1,7 +1,7 @@
 {
-  "input" : "1493141029000 hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|src=10.0.0.1 msg=Detected a threat.\\n No action needed.",
+  "input" : "1493738863000 hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|src=10.0.0.1 msg=Detected a threat.\\n No action needed.",
   "expected" : {
-    "timestamp" : 1493141029000,
+    "timestamp" : 1493738863000,
     "host" : "hostname.example.com",
     "cefVersion" : 0,
     "deviceVendor" : "security",
