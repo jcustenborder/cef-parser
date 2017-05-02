@@ -1,7 +1,7 @@
 {
-  "input" : "Apr 25 2017 17:23:49.000 hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|",
+  "input" : "May 02 2017 15:27:43.000 hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|",
   "expected" : {
-    "timestamp" : 1493141029000,
+    "timestamp" : 1493738863000,
     "host" : "hostname.example.com",
     "cefVersion" : 0,
     "deviceVendor" : "security",
