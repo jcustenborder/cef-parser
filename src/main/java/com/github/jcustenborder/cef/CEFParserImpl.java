@@ -136,7 +136,9 @@ class CEFParserImpl implements CEFParser {
 
 
     for (String token : parts) {
-      token = token.replace("\\|", "|");
+      token = token
+          .replace("\\\\", "\\")
+          .replace("\\|", "|");
       log.trace("parse() - index={}, token='{}'", index, token);
 
       switch (index) {
@@ -176,6 +178,7 @@ class CEFParserImpl implements CEFParser {
 
     final List<String> extensionParts = parts.subList(7, parts.size());
     final String extension = Joiner.on('|').join(extensionParts)
+        .replace("\\\\", "\\")
         .replace("\\n", "\n")
         .replace("\\=", "=");
     log.trace("parse() - extension = '{}'", extension);
