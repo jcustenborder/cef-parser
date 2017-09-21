@@ -30,13 +30,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class CEFParserImpl implements CEFParser {
-  final static TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+  private static final TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("UTC");
+  private static final Locale DEFAULT_LOCALE = Locale.ROOT;
   private static final Logger log = LoggerFactory.getLogger(CEFParserImpl.class);
   private static final Pattern PATTERN_CEF_PREFIX = Pattern.compile("^((?<timestamp>.+)\\s+(?<host>\\S+)\\s+)(?<cs0>CEF:\\d+)|^(?<cs1>CEF:\\d+)");
   private static final Pattern PATTERN_CEF_MAIN = Pattern.compile("(?<!\\\\)\\|");
@@ -60,6 +62,11 @@ class CEFParserImpl implements CEFParser {
 
   @Override
   public Message parse(final String event) {
+    return parse(event, DEFAULT_TIME_ZONE, DEFAULT_LOCALE);
+  }
+
+  @Override
+  public Message parse(final String event, final TimeZone timeZone, final Locale locale) {
     log.trace("parse('{}')", event);
     Matcher prefixMatcher = PATTERN_CEF_PREFIX.matcher(event);
     if (!prefixMatcher.find()) {
@@ -84,8 +91,8 @@ class CEFParserImpl implements CEFParser {
 
 
         for (String df : DATE_FORMATS) {
-          SimpleDateFormat dateFormat = new SimpleDateFormat(df);
-          dateFormat.setTimeZone(TIME_ZONE);
+          SimpleDateFormat dateFormat = new SimpleDateFormat(df, locale);
+          dateFormat.setTimeZone(timeZone);
           try {
             log.trace("parse() - Trying to parse '{}' with format '{}'", timestampText, df);
             timestamp = dateFormat.parse(timestampText);
@@ -93,7 +100,7 @@ class CEFParserImpl implements CEFParser {
 
             if (alterYear) {
               log.trace("parse() - date format '{}' does not specify the year. Might need to alter the year.", df);
-              Calendar calendar = Calendar.getInstance(TIME_ZONE);
+              Calendar calendar = Calendar.getInstance(timeZone);
               int thisYear = calendar.get(Calendar.YEAR);
               calendar.setTime(timestamp);
               final int year = calendar.get(Calendar.YEAR);
