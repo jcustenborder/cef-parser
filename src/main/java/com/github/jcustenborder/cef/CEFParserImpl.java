@@ -15,11 +15,6 @@
  */
 package com.github.jcustenborder.cef;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.primitives.Longs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,8 +67,13 @@ class CEFParserImpl implements CEFParser {
     Message.Builder builder = this.messageFactory.newBuilder();
 
     final int cefstartIndex;
-    if (!Strings.isNullOrEmpty(timestampText) && !Strings.isNullOrEmpty(host)) {
-      Long longTimestamp = Longs.tryParse(timestampText);
+    if (timestampText != null && !timestampText.isEmpty() && host != null && !host.isEmpty()) {
+      Long longTimestamp = null;
+      try {
+        longTimestamp = Long.parseLong(timestampText);
+      } catch (NumberFormatException e) {
+        log.trace("Unable to parse timestamp '{}'", timestampText);
+      }
       Date timestamp = null;
       if (null != longTimestamp) {
         log.trace("parse() - Detected timestamp is stored as a long.");
@@ -109,7 +109,9 @@ class CEFParserImpl implements CEFParser {
             log.trace("parse() - Could not parse '{}' with '{}'.", timestampText, df);
           }
         }
-        Preconditions.checkState(null != timestamp, "Could not parse timestamp. '{}'", timestampText);
+        if (null == timestamp) {
+          throw new IllegalStateException("Could not parse timestamp. '" + timestampText + "'");
+        }
       }
       log.trace("parse() - timestamp = {}, {}", timestamp.getTime(), timestamp);
       builder.timestamp(timestamp);
@@ -123,7 +125,7 @@ class CEFParserImpl implements CEFParser {
     log.trace("parse() - cefstartIndex = {}", cefstartIndex);
     final String eventBody = event.substring(cefstartIndex);
 
-    List<String> parts = Splitter.on(PATTERN_CEF_MAIN).splitToList(eventBody);
+    List<String> parts = Arrays.asList(PATTERN_CEF_MAIN.split(eventBody));
     if (log.isTraceEnabled()) {
       int i = 0;
       for (String part : parts) {
@@ -175,7 +177,7 @@ class CEFParserImpl implements CEFParser {
     }
 
     final List<String> extensionParts = parts.subList(7, parts.size());
-    final String extension = Joiner.on('|').join(extensionParts)
+    final String extension = String.join("|", extensionParts)
         .replace("\\n", "\n")
         .replace("\\=", "=");
     log.trace("parse() - extension = '{}'", extension);
