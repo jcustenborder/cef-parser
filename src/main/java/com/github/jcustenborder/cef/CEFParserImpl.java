@@ -176,6 +176,7 @@ class CEFParserImpl implements CEFParser {
 
     final List<String> extensionParts = parts.subList(7, parts.size());
     final String extension = Joiner.on('|').join(extensionParts)
+        .replace("\\r", "\r")
         .replace("\\n", "\n")
         .replace("\\=", "=");
     log.trace("parse() - extension = '{}'", extension);
