@@ -129,6 +129,9 @@
                         <version>${junit.surefire.plugin.version}</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <argLine>-Djava.awt.headless=true</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -158,13 +161,6 @@
                         <version>1.0.0.0</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <argLine>-Djava.awt.headless=true</argLine>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
