@@ -175,9 +175,7 @@ class CEFParserImpl implements CEFParser {
     }
 
     final List<String> extensionParts = parts.subList(7, parts.size());
-    final String extension = Joiner.on('|').join(extensionParts)
-        .replace("\\n", "\n")
-        .replace("\\=", "=");
+    final String extension = Joiner.on('|').join(extensionParts);
     log.trace("parse() - extension = '{}'", extension);
     Map<String, String> extensions = new LinkedHashMap<>(100);
     Matcher matcher = PATTERN_EXTENSION.matcher(extension);
@@ -190,7 +188,7 @@ class CEFParserImpl implements CEFParser {
       log.trace("parse() - matcher.start() = {}, matcher.end() = {}", matcher.start(), matcher.end());
 
       if (lastEnd > -1) {
-        value = extension.substring(lastEnd, matcher.start()).trim();
+        value = sanitizeValue(extension.substring(lastEnd, matcher.start()));
         extensions.put(key, value);
         log.trace("parse() - key='{}' value='{}'", key, value);
       }
@@ -201,7 +199,7 @@ class CEFParserImpl implements CEFParser {
     }
 
     if (lastStart > -1 && !extensions.containsKey(key)) {
-      value = extension.substring(lastEnd).trim();
+      value = sanitizeValue(extension.substring(lastEnd));
       extensions.put(key, value);
       log.trace("parse() - key='{}' value='{}'", key, value);
     }
@@ -210,5 +208,9 @@ class CEFParserImpl implements CEFParser {
     return builder.build();
   }
 
-
+  private String sanitizeValue(String value) {
+    return value.trim()
+        .replace("\\n", "\n")
+        .replace("\\=", "=");
+  }
 }

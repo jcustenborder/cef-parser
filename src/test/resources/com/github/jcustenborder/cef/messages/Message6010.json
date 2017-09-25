@@ -1,0 +1,18 @@
+{
+  "input" : "Sep 25 2017 13:36:15.000 UTC hostname.example.com CEF:0|security|threatmanager|1.0|100|Detected a threat. No action needed.|10|src=10.0.0.1 msg=PAM 2 more authentication failures; logname\\= uid\\=0 euid\\=0 tty\\=ssh ruser\\= rhost\\=116.31.116.17 user\\=root",
+  "expected" : {
+    "timestamp" : 1506346575000,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "security",
+    "deviceProduct" : "threatmanager",
+    "deviceVersion" : "1.0",
+    "deviceEventClassId" : "100",
+    "name" : "Detected a threat. No action needed.",
+    "severity" : "10",
+    "extensions" : {
+      "src" : "10.0.0.1",
+      "msg" : "PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=116.31.116.17 user=root"
+    }
+  }
+}
