@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 class CEFParserImpl implements CEFParser {
   final static TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
   private static final Logger log = LoggerFactory.getLogger(CEFParserImpl.class);
-  private static final Pattern PATTERN_CEF_PREFIX = Pattern.compile("^((?<timestamp>.+)\\s+(?<host>\\S+)\\s+)(?<cs0>CEF:\\d+)|^(?<cs1>CEF:\\d+)");
+  private static final Pattern PATTERN_CEF_PREFIX = Pattern.compile("^((?<timestamp>.+)\\s+(?<host>\\S+)\\s+).*?(?<cs0>CEF:\\d+)|^.*?(?<cs1>CEF:\\d+)");
   private static final Pattern PATTERN_CEF_MAIN = Pattern.compile("(?<!\\\\)\\|");
   private static final Pattern PATTERN_EXTENSION = Pattern.compile("(\\w+)=");
   private static final List<String> DATE_FORMATS = Arrays.asList(
