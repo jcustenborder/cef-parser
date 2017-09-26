@@ -1,0 +1,19 @@
+{
+  "input" : "2017-09-26T08:40:26.000 +0000 hostname.example.com CEF:0|security|threatmanager|1.0|100|detected a \\\\ in packet|10|src=10.0.0.1 act=blocked a \\\\ dst=1.1.1.1",
+  "expected" : {
+    "timestamp" : 1506415226000,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "security",
+    "deviceProduct" : "threatmanager",
+    "deviceVersion" : "1.0",
+    "deviceEventClassId" : "100",
+    "name" : "detected a \\ in packet",
+    "severity" : "10",
+    "extensions" : {
+      "src" : "10.0.0.1",
+      "act" : "blocked a \\",
+      "dst" : "1.1.1.1"
+    }
+  }
+}

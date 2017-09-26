@@ -1,0 +1,22 @@
+{
+  "input" : "2017-09-26T08:40:26.000 Z hostname.example.com CEF:0|Trend Micro Inc.|OSSEC HIDS|v2.5.1|5302|User missed the password to change UID to root.|9|dvc=ubuntusvr cs2=ubuntusvr->/var/log/auth.log cs2Label=Location src= suser=root msg=May 11 21:16:05 ubuntusvr su[24120]: - /dev/pts/1 xavier:root",
+  "expected" : {
+    "timestamp" : 1506415226000,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "Trend Micro Inc.",
+    "deviceProduct" : "OSSEC HIDS",
+    "deviceVersion" : "v2.5.1",
+    "deviceEventClassId" : "5302",
+    "name" : "User missed the password to change UID to root.",
+    "severity" : "9",
+    "extensions" : {
+      "dvc" : "ubuntusvr",
+      "cs2" : "ubuntusvr->/var/log/auth.log",
+      "cs2Label" : "Location",
+      "src" : "",
+      "suser" : "root",
+      "msg" : "May 11 21:16:05 ubuntusvr su[24120]: - /dev/pts/1 xavier:root"
+    }
+  }
+}

@@ -86,7 +86,17 @@ public class ParserImplTest {
         "MMM dd yyyy HH:mm:ss.SSS zzz",
         "MMM dd yyyy HH:mm:ss.SSS",
         "MMM dd yyyy HH:mm:ss zzz",
-        "MMM dd yyyy HH:mm:ss"
+        "MMM dd yyyy HH:mm:ss",
+        "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+        "yyyy-MM-dd'T'HH:mm:ssZ",
+        "yyyy-MM-dd'T'HH:mm:ss.SSS zzz",
+        "yyyy-MM-dd'T'HH:mm:ss zzz",
+        "yyyy-MM-dd'T'HH:mm:ss.SSS ZZZ",
+        "yyyy-MM-dd'T'HH:mm:ss ZZZ",
+        "yyyy-MM-dd'T'HH:mm:ss.SSS XXX",
+        "yyyy-MM-dd'T'HH:mm:ss XXX",
+        "yyyy-MM-dd'T'HH:mm:ssXXX",
+        "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
     );
 
     for (Map.Entry<Integer, TestCase> kvp : testcaseByNumber.entrySet()) {

@@ -1,0 +1,18 @@
+{
+  "input" : "2017-09-26T08:40:26 Z hostname.example.com ASM:CEF:0|F5|ASM|10.1.0|Illegal query string length|Illegal query string length|6|dvchost=3600.lab.asm.f5net.com dvc=172.30.0.20",
+  "expected" : {
+    "timestamp" : 1506415226000,
+    "host" : "hostname.example.com",
+    "cefVersion" : 0,
+    "deviceVendor" : "F5",
+    "deviceProduct" : "ASM",
+    "deviceVersion" : "10.1.0",
+    "deviceEventClassId" : "Illegal query string length",
+    "name" : "Illegal query string length",
+    "severity" : "6",
+    "extensions" : {
+      "dvchost" : "3600.lab.asm.f5net.com",
+      "dvc" : "172.30.0.20"
+    }
+  }
+}
