@@ -15,48 +15,37 @@
  */
 package com.github.jcustenborder.cef;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.primitives.Longs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 class CEFParserImpl implements CEFParser {
-  final static TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
   private static final Logger log = LoggerFactory.getLogger(CEFParserImpl.class);
   private static final Pattern PATTERN_CEF_PREFIX = Pattern.compile("^((?<timestamp>.+)\\s+(?<host>\\S+)\\s+)(?<cs0>CEF:\\d+)|^(?<cs1>CEF:\\d+)");
   private static final Pattern PATTERN_CEF_MAIN = Pattern.compile("(?<!\\\\)\\|");
   private static final Pattern PATTERN_EXTENSION = Pattern.compile("(\\w+)=");
-  private static final List<String> DATE_FORMATS = Arrays.asList(
-      "MMM dd yyyy HH:mm:ss.SSS zzz",
-      "MMM dd yyyy HH:mm:ss.SSS",
-      "MMM dd yyyy HH:mm:ss zzz",
-      "MMM dd yyyy HH:mm:ss",
-      "MMM dd HH:mm:ss.SSS zzz",
-      "MMM dd HH:mm:ss.SSS",
-      "MMM dd HH:mm:ss zzz",
-      "MMM dd HH:mm:ss"
-  );
+
   final MessageFactory messageFactory;
+  private DateParser dateParser;
 
   public CEFParserImpl(MessageFactory messageFactory) {
-    this.messageFactory = messageFactory;
+    this(messageFactory, new DateParserImpl());
   }
 
+  public CEFParserImpl(MessageFactory messageFactory, DateParser dateParser) {
+    this.messageFactory = messageFactory;
+    this.dateParser = dateParser;
+  }
 
   @Override
   public Message parse(final String event) {
@@ -73,44 +62,8 @@ class CEFParserImpl implements CEFParser {
 
     final int cefstartIndex;
     if (!Strings.isNullOrEmpty(timestampText) && !Strings.isNullOrEmpty(host)) {
-      Long longTimestamp = Longs.tryParse(timestampText);
-      Date timestamp = null;
-      if (null != longTimestamp) {
-        log.trace("parse() - Detected timestamp is stored as a long.");
-        timestamp = new Date(longTimestamp);
-      } else {
-        log.trace("parse() - Trying to parse the timestamp.");
-        // SimpleDateFormat is not threadsafe so we have to create them each time.
-
-
-        for (String df : DATE_FORMATS) {
-          SimpleDateFormat dateFormat = new SimpleDateFormat(df);
-          dateFormat.setTimeZone(TIME_ZONE);
-          try {
-            log.trace("parse() - Trying to parse '{}' with format '{}'", timestampText, df);
-            timestamp = dateFormat.parse(timestampText);
-            final boolean alterYear = !df.contains("yyyy");
-
-            if (alterYear) {
-              log.trace("parse() - date format '{}' does not specify the year. Might need to alter the year.", df);
-              Calendar calendar = Calendar.getInstance(TIME_ZONE);
-              int thisYear = calendar.get(Calendar.YEAR);
-              calendar.setTime(timestamp);
-              final int year = calendar.get(Calendar.YEAR);
-              if (1970 == year) {
-                log.trace("parse() - altering year from {} to {}", year, thisYear);
-                calendar.set(Calendar.YEAR, thisYear);
-                timestamp = calendar.getTime();
-              }
-            }
-
-            break;
-          } catch (ParseException e) {
-            log.trace("parse() - Could not parse '{}' with '{}'.", timestampText, df);
-          }
-        }
-        Preconditions.checkState(null != timestamp, "Could not parse timestamp. '{}'", timestampText);
-      }
+      Date timestamp = this.dateParser.parseDate(timestampText);
+      Preconditions.checkState(null != timestamp, "Could not parse timestamp. '{}'", timestampText);
       log.trace("parse() - timestamp = {}, {}", timestamp.getTime(), timestamp);
       builder.timestamp(timestamp);
       builder.host(host);

@@ -19,12 +19,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.Date;
+
 public class MessageAssertions {
   public static void assertMessage(Message expected, Message actual) {
     if (null == expected) {
       assertNull(actual, "actual should be null.");
     } else {
       assertNotNull(actual, "actual should not be null.");
+    }
+
+    // Force actual year to match the year that the tests were recorded
+    final Date expectedTimestamp = expected.timestamp(), actualTimestamp = actual.timestamp();
+    if (expectedTimestamp != null && actualTimestamp != null
+        && expectedTimestamp.getYear() != actualTimestamp.getYear()) {
+      assertEquals(actualTimestamp.getYear(), new Date().getYear(), "year does not match");
+      actual.timestamp().setYear(expected.timestamp().getYear());
     }
 
     assertEquals(expected.timestamp(), actual.timestamp(), "timestamp() does not match");
