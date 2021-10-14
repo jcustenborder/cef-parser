@@ -43,6 +43,7 @@ public class DateParserImpl implements DateParser {
   );
   private static final Logger log = LoggerFactory.getLogger(DateParserImpl.class);
 
+  @Override
   public Date parseDate(String timestampText) {
     Long longTimestamp = Longs.tryParse(timestampText);
     if (null != longTimestamp) {
